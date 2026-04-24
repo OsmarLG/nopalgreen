@@ -36,7 +36,7 @@ export default function Profile({
                 <Heading
                     variant="small"
                     title="Profile information"
-                    description="Update your name and email address"
+                    description="Update your name, username and email address"
                 />
 
                 <Form
@@ -49,6 +49,25 @@ export default function Profile({
                 >
                     {({ processing, recentlySuccessful, errors }) => (
                         <>
+                            <div className="grid gap-2">
+                                <Label htmlFor="username" className="font-semibold text-nopal-700">Username</Label>
+
+                                <Input
+                                    id="username"
+                                    className="mt-1 block h-12 w-full rounded-xl border-stone-200 bg-white text-stone-900 placeholder:text-stone-400"
+                                    defaultValue={user.username}
+                                    name="username"
+                                    required
+                                    autoComplete="username"
+                                    placeholder="Username"
+                                />
+
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.username}
+                                />
+                            </div>
+
                             <div className="grid gap-2">
                                 <Label htmlFor="name" className="font-semibold text-nopal-700">Name</Label>
 
@@ -78,7 +97,7 @@ export default function Profile({
                                     defaultValue={user.email}
                                     name="email"
                                     required
-                                    autoComplete="username"
+                                    autoComplete="email"
                                     placeholder="Email address"
                                 />
 

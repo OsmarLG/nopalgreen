@@ -24,11 +24,11 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
             href: editSecurity(),
             icon: null,
         },
-        {
-            title: 'Appearance',
-            href: editAppearance(),
-            icon: null,
-        },
+        // {
+        //     title: 'Appearance',
+        //     href: editAppearance(),
+        //     icon: null,
+        // },
     ];
 
     return (
@@ -56,7 +56,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                                     className={cn(
                                         'h-11 w-full justify-start rounded-xl px-4 font-semibold text-stone-500 hover:bg-stone-100 hover:text-stone-900',
                                         {
-                                            'border border-nopal-900 bg-nopal-900 text-white shadow-sm hover:border-nopal-900 hover:bg-nopal-900 hover:text-white':
+                                            'border border-nopal-700 bg-nopal-50 text-nopal-700 shadow-sm hover:border-nopal-700 hover:bg-nopal-100 hover:text-nopal-700':
                                                 isActive,
                                         },
                                     )}
