@@ -29,7 +29,7 @@ export default function DeleteUser() {
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                     <p className="font-medium">Warning</p>
-                    <p className="text-sm">
+                    <p className="text-sm text-red-700">
                         Please proceed with caution, this cannot be undone.
                     </p>
                 </div>
@@ -69,7 +69,7 @@ export default function DeleteUser() {
                                     <div className="grid gap-2">
                                         <Label
                                             htmlFor="password"
-                                            className="sr-only"
+                                            className="font-semibold text-nopal-700"
                                         >
                                             Password
                                         </Label>
@@ -80,6 +80,7 @@ export default function DeleteUser() {
                                             ref={passwordInput}
                                             placeholder="Password"
                                             autoComplete="current-password"
+                                            className="h-12 rounded-xl border-stone-200 bg-white text-stone-900 placeholder:text-stone-400"
                                         />
 
                                         <InputError message={errors.password} />
@@ -89,6 +90,7 @@ export default function DeleteUser() {
                                         <DialogClose asChild>
                                             <Button
                                                 variant="secondary"
+                                                className="rounded-xl border border-stone-200 bg-white text-stone-700 hover:bg-stone-100"
                                                 onClick={() =>
                                                     resetAndClearErrors()
                                                 }
@@ -100,6 +102,7 @@ export default function DeleteUser() {
                                         <Button
                                             variant="destructive"
                                             disabled={processing}
+                                            className="rounded-xl"
                                             asChild
                                         >
                                             <button

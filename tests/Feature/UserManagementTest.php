@@ -13,7 +13,7 @@ test('master can view the user management page', function () {
 
     $response->assertOk()->assertInertia(fn (Assert $page) => $page
         ->component('users/index')
-        ->has('users.data', 1)
+        ->has('users.data', 4)
         ->where('auth.user.username', 'osmarlg')
     );
 });

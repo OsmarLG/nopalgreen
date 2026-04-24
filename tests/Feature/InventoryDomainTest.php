@@ -19,7 +19,7 @@ test('inventory domain seeder creates foundational catalog data', function () {
     $this->assertDatabaseHas('products', ['slug' => 'totopos']);
 });
 
-test('recipes and operational records support raw materials and produced products as inputs', function () {
+test('recipes support raw materials and produced products as inputs without seeding operations', function () {
     $this->seed(InventoryDomainSeeder::class);
 
     $totoposRecipe = Recipe::query()
@@ -32,43 +32,21 @@ test('recipes and operational records support raw materials and produced product
         ->toContain('raw_material', 'product');
 
     $tortillaBlanca = Product::query()->where('slug', 'tortilla-blanca')->firstOrFail();
-    $maizBlanco = RawMaterial::query()->where('slug', 'maiz-blanco')->firstOrFail();
-    $purchase = Purchase::query()->firstOrFail();
-    $order = ProductionOrder::query()->firstOrFail();
+    $aceite = RawMaterial::query()->where('slug', 'aceite')->firstOrFail();
 
     $this->assertDatabaseHas('recipe_items', [
         'recipe_id' => $totoposRecipe->id,
         'item_type' => 'product',
         'item_id' => $tortillaBlanca->id,
     ]);
-
-    $this->assertDatabaseHas('inventory_movements', [
-        'item_type' => InventoryMovement::ITEM_TYPE_RAW_MATERIAL,
-        'item_id' => $maizBlanco->id,
-        'movement_type' => InventoryMovement::TYPE_PURCHASE,
-        'reference_type' => Purchase::class,
-        'reference_id' => $purchase->id,
+    $this->assertDatabaseHas('recipe_items', [
+        'recipe_id' => $totoposRecipe->id,
+        'item_type' => 'raw_material',
+        'item_id' => $aceite->id,
     ]);
 
-    $this->assertDatabaseHas('inventory_movements', [
-        'item_type' => InventoryMovement::ITEM_TYPE_PRODUCT,
-        'item_id' => $order->product_id,
-        'movement_type' => InventoryMovement::TYPE_PRODUCTION_OUTPUT,
-        'reference_type' => ProductionOrder::class,
-        'reference_id' => $order->id,
-    ]);
-
-    $this->assertDatabaseHas('finance_transactions', [
-        'reference_type' => Purchase::class,
-        'reference_id' => $purchase->id,
-        'transaction_type' => FinanceTransaction::TYPE_EXPENSE,
-        'source' => FinanceTransaction::SOURCE_PURCHASE,
-    ]);
-
-    $this->assertDatabaseHas('finance_transactions', [
-        'reference_type' => ProductionOrder::class,
-        'reference_id' => $order->id,
-        'transaction_type' => FinanceTransaction::TYPE_EXPENSE,
-        'source' => FinanceTransaction::SOURCE_PRODUCTION,
-    ]);
+    expect(InventoryMovement::query()->count())->toBe(0);
+    expect(FinanceTransaction::query()->count())->toBe(0);
+    expect(Purchase::query()->count())->toBe(0);
+    expect(ProductionOrder::query()->count())->toBe(0);
 });

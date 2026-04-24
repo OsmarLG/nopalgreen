@@ -50,11 +50,11 @@ export default function Profile({
                     {({ processing, recentlySuccessful, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name" className="font-semibold text-nopal-700">Name</Label>
 
                                 <Input
                                     id="name"
-                                    className="mt-1 block w-full"
+                                    className="mt-1 block h-12 w-full rounded-xl border-stone-200 bg-white text-stone-900 placeholder:text-stone-400"
                                     defaultValue={user.name}
                                     name="name"
                                     required
@@ -69,12 +69,12 @@ export default function Profile({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email" className="font-semibold text-nopal-700">Email address</Label>
 
                                 <Input
                                     id="email"
                                     type="email"
-                                    className="mt-1 block w-full"
+                                    className="mt-1 block h-12 w-full rounded-xl border-stone-200 bg-white text-stone-900 placeholder:text-stone-400"
                                     defaultValue={user.email}
                                     name="email"
                                     required
@@ -91,12 +91,12 @@ export default function Profile({
                             {mustVerifyEmail &&
                                 user.email_verified_at === null && (
                                     <div>
-                                        <p className="-mt-4 text-sm text-muted-foreground">
+                                        <p className="-mt-4 text-sm text-stone-500">
                                             Your email address is unverified.{' '}
                                             <Link
                                                 href={send()}
                                                 as="button"
-                                                className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                                className="font-medium text-nopal-700 underline decoration-stone-300 underline-offset-4 transition-colors duration-300 ease-out hover:text-nopal-800 hover:decoration-current"
                                             >
                                                 Click here to resend the
                                                 verification email.
@@ -117,6 +117,7 @@ export default function Profile({
                                 <Button
                                     disabled={processing}
                                     data-test="update-profile-button"
+                                    className="rounded-xl"
                                 >
                                     Save
                                 </Button>
@@ -128,7 +129,7 @@ export default function Profile({
                                     leave="transition ease-in-out"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-neutral-600">
+                                    <p className="text-sm text-stone-500">
                                         Saved
                                     </p>
                                 </Transition>

@@ -166,13 +166,7 @@ test('edit presentation includes current inactive options', function () {
         ->component('presentations/edit')
         ->where('presentationRecord.owner_id', $inactiveRawMaterial->id)
         ->where('presentationRecord.unit.id', $inactiveUnit->id)
-        ->has('rawMaterials', fn (Assert $options) => $options
-            ->where('0.id', $inactiveRawMaterial->id)
-            ->etc()
-        )
-        ->has('units', fn (Assert $options) => $options
-            ->where('0.id', $inactiveUnit->id)
-            ->etc()
-        )
+        ->where('rawMaterials', fn ($options) => collect($options)->pluck('id')->contains($inactiveRawMaterial->id))
+        ->where('units', fn ($options) => collect($options)->pluck('id')->contains($inactiveUnit->id))
     );
 });

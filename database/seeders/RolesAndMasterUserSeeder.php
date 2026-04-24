@@ -28,16 +28,53 @@ class RolesAndMasterUserSeeder extends Seeder
             $role->syncPermissions($permissions);
         }
 
-        $masterUser = User::query()->updateOrCreate(
-            ['username' => 'osmarlg'],
+        $this->seedUsers();
+    }
+
+    private function seedUsers(): void
+    {
+        $users = [
             [
+                'username' => 'osmarlg',
                 'name' => 'Osmar Liera',
                 'email' => 'osmarlg@nopalgreen.local',
-                'password' => Hash::make('password'),
+                'roles' => ['master'],
             ],
-        );
+            [
+                'username' => 'admin',
+                'name' => 'Administrador',
+                'email' => 'admin@nopalgreen.local',
+                'roles' => ['admin'],
+            ],
+            [
+                'username' => 'repartidor',
+                'name' => 'Repartidor',
+                'email' => 'repartidor@nopalgreen.local',
+                'roles' => ['empleado', 'repartidor'],
+                'attendance_starts_at' => now()->toDateString(),
+            ],
+            [
+                'username' => 'planta',
+                'name' => 'Operador de Planta',
+                'email' => 'planta@nopalgreen.local',
+                'roles' => ['empleado', 'planta'],
+                'attendance_starts_at' => now()->toDateString(),
+            ],
+        ];
 
-        $masterUser->syncRoles(['master']);
-        $masterUser->syncPermissions([]);
+        foreach ($users as $userData) {
+            $user = User::query()->updateOrCreate(
+                ['username' => $userData['username']],
+                [
+                    'name' => $userData['name'],
+                    'email' => $userData['email'],
+                    'password' => Hash::make('password'),
+                    'attendance_starts_at' => $userData['attendance_starts_at'] ?? null,
+                ],
+            );
+
+            $user->syncRoles($userData['roles']);
+            $user->syncPermissions([]);
+        }
     }
 }

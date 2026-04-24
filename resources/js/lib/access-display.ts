@@ -1,7 +1,25 @@
 const resourceLabels: Record<string, string> = {
+    attendance: 'Asistencia',
+    branding: 'Marca',
+    customers: 'Clientes',
+    employees: 'Empleados',
+    finances: 'Finanzas',
+    inventory_adjustments: 'Ajustes y mermas',
+    inventory_movements: 'Movimientos',
+    inventory_transfers: 'Transferencias',
+    presentations: 'Presentaciones',
+    products: 'Productos',
+    production_orders: 'Ordenes de produccion',
+    purchases: 'Compras',
+    raw_materials: 'Materias primas',
+    recipes: 'Recetas',
+    reports: 'Reportes',
     users: 'Usuarios',
     roles: 'Roles',
     permissions: 'Permisos',
+    sales: 'Ventas',
+    suppliers: 'Proveedores',
+    units: 'Unidades',
 };
 
 const actionLabels: Record<string, string> = {
@@ -9,9 +27,34 @@ const actionLabels: Record<string, string> = {
     create: 'Crear',
     update: 'Actualizar',
     delete: 'Eliminar',
+    manage: 'Gestionar',
+    mark: 'Marcar',
 };
 
-const groupOrder = ['users', 'roles', 'permissions', 'ungrouped'] as const;
+const groupOrder = [
+    'users',
+    'roles',
+    'permissions',
+    'units',
+    'branding',
+    'attendance',
+    'employees',
+    'customers',
+    'sales',
+    'finances',
+    'suppliers',
+    'raw_materials',
+    'products',
+    'presentations',
+    'recipes',
+    'production_orders',
+    'purchases',
+    'inventory_adjustments',
+    'inventory_transfers',
+    'inventory_movements',
+    'reports',
+    'ungrouped',
+] as const;
 
 const toTitleCase = (value: string): string => {
     return value

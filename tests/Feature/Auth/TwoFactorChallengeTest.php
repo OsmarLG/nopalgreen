@@ -29,9 +29,9 @@ test('two factor challenge can be rendered', function () {
     ])->save();
 
     $this->post(route('login'), [
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => 'password',
-    ]);
+    ])->assertRedirect(route('two-factor.login'));
 
     $this->get(route('two-factor.login'))
         ->assertOk()

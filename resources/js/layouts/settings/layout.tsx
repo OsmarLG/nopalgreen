@@ -32,44 +32,57 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     ];
 
     return (
-        <div className="px-4 py-6">
+        <div className="space-y-6 px-4 py-6">
             <Heading
                 title="Settings"
                 description="Manage your profile and account settings"
             />
 
-            <div className="flex flex-col lg:flex-row lg:space-x-12">
-                <aside className="w-full max-w-xl lg:w-48">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+                <aside className="w-full max-w-xl rounded-[2rem] border border-stone-200 bg-white p-4 shadow-sm lg:w-64">
                     <nav
-                        className="flex flex-col space-y-1 space-x-0"
+                        className="flex flex-col space-y-2 space-x-0"
                         aria-label="Settings"
                     >
-                        {sidebarNavItems.map((item, index) => (
-                            <Button
-                                key={`${toUrl(item.href)}-${index}`}
-                                size="sm"
-                                variant="ghost"
-                                asChild
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': isCurrentOrParentUrl(item.href),
-                                })}
-                            >
-                                <Link href={item.href}>
-                                    {item.icon && (
-                                        <item.icon className="h-4 w-4" />
+                        {sidebarNavItems.map((item, index) => {
+                            const isActive = isCurrentOrParentUrl(item.href);
+
+                            return (
+                                <Button
+                                    key={`${toUrl(item.href)}-${index}`}
+                                    size="sm"
+                                    variant="ghost"
+                                    asChild
+                                    className={cn(
+                                        'h-11 w-full justify-start rounded-xl px-4 font-semibold text-stone-500 hover:bg-stone-100 hover:text-stone-900',
+                                        {
+                                            'border border-nopal-900 bg-nopal-900 text-white shadow-sm hover:border-nopal-900 hover:bg-nopal-900 hover:text-white':
+                                                isActive,
+                                        },
                                     )}
-                                    {item.title}
-                                </Link>
-                            </Button>
-                        ))}
+                                >
+                                    <Link
+                                        href={item.href}
+                                        aria-current={isActive ? 'page' : undefined}
+                                    >
+                                        {item.icon && (
+                                            <item.icon className="h-4 w-4" />
+                                        )}
+                                        {item.title}
+                                    </Link>
+                                </Button>
+                            );
+                        })}
                     </nav>
                 </aside>
 
-                <Separator className="my-6 lg:hidden" />
+                <Separator className="my-2 lg:hidden" />
 
-                <div className="flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">
-                        {children}
+                <div className="flex-1">
+                    <section className="space-y-6">
+                        <div className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm">
+                            {children}
+                        </div>
                     </section>
                 </div>
             </div>

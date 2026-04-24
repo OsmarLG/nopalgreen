@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -136,12 +137,11 @@ export default function UserForm({
                     <Label htmlFor="attendance_starts_at" className="font-semibold text-nopal-700">
                         Inicio de asistencia
                     </Label>
-                    <Input
+                    <DateTimePicker
                         id="attendance_starts_at"
-                        type="date"
                         value={form.data.attendance_starts_at}
-                        onChange={(event) => form.setData('attendance_starts_at', event.target.value)}
-                        className="h-12 rounded-xl border-stone-200 bg-white text-stone-900"
+                        onChange={(value) => form.setData('attendance_starts_at', value)}
+                        includeTime={false}
                     />
                     <p className="text-xs text-stone-500">
                         {employeeRoleSelected

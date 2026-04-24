@@ -13,6 +13,7 @@ use App\Models\Sale;
 use App\Models\User;
 use App\Services\AttendanceService;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -353,8 +354,7 @@ class DashboardController extends Controller
      */
     private function attendanceOverviewItems(): array
     {
-        $employees = User::query()
-            ->role('empleado')
+        $employees = $this->employeeQuery()
             ->orderBy('name')
             ->get();
 
@@ -382,8 +382,7 @@ class DashboardController extends Controller
 
     private function attendanceCountForToday(string $status): int
     {
-        return User::query()
-            ->role('empleado')
+        return $this->employeeQuery()
             ->get()
             ->reduce(function (int $carry, User $employee) use ($status): int {
                 $record = $this->attendanceService->ensureTodayRecord($employee);
@@ -397,6 +396,16 @@ class DashboardController extends Controller
 
                 return $carry + (int) ($liveStatus === $status);
             }, 0);
+    }
+
+    /**
+     * @return Builder<User>
+     */
+    private function employeeQuery(): Builder
+    {
+        return User::query()->whereHas('roles', function (Builder $query): void {
+            $query->where('name', 'empleado');
+        });
     }
 
     private function statusLabel(string $status): string
